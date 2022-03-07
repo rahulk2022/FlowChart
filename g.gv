@@ -1,0 +1,38 @@
+digraph G{
+   start -> Insert_URL[label="User", weight="User"]
+
+   Insert_URL -> Check_for_Internet_Connection
+ 
+   Check_for_Internet_Connection -> Go_for_IP_resolution_to_the_DNS_server[label="True", weight="True"] 
+
+   Check_for_Internet_Connection -> Query_Failed_END[label="False", weight="False"]
+
+   Query_Failed_END -> Insert_URL[label="Client", weight="Client"]
+
+   Go_for_IP_resolution_to_the_DNS_server -> DNS_Server[label="Search the actual address on
+   the behalf of domain name", weight="Search the actual address on
+   the behalf of domain name"]
+
+   DNS_Server -> If_IP_found_for_the_requested_domain
+
+   If_IP_found_for_the_requested_domain -> Go_for_IP_resolution_to_the_DNS_server[label="True", weight="True"]
+
+   If_IP_found_for_the_requested_domain -> Insert_URL[label="False   DNS address could not be found", weight="False   DNS address could not be found"]
+
+   Go_for_IP_resolution_to_the_DNS_server -> HTTP_request_message_to_the_web_server_using_TCP__IP[label="Respond for IP address behalf of the domain name", weight="Respond for IP address behalf of the domain name"]
+
+
+   HTTP_request_message_to_the_web_server_using_TCP__IP -> WebServer
+
+   WebServer -> Check_whether_Web_page_is_available_or_not[label="True   200 OK message, which means Of course you can look at that website! Here it is", weight="True   200 OK message, which means Of course you can look at that website! Here it is"]
+
+
+    Check_whether_Web_page_is_available_or_not -> Now_the_webserver_starts_sending_starts_sending_the_website_files_to_the_browser_as_a_series_of_small_chunks_called_data_packets
+
+    
+   Now_the_webserver_starts_sending_starts_sending_the_website_files_to_the_browser_as_a_series_of_small_chunks_called_data_packets -> After_receiving_data_browser_render_the_data_and_shows_the_website_over_the_screen
+
+    
+  Check_whether_Web_page_is_available_or_not -> Insert_URL[label="false   404 Page Not Found", weight="false   404 Page Not Found"]
+
+}
